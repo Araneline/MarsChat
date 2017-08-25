@@ -19,6 +19,17 @@
 			init();
 			sfs.connect();
 			
+
+		$("#send_icon").click(function() {
+			onSendPublicMessageBtClick();
+		});
+
+		$('#inputMessage').keypress(function(e) {
+		    if(e.which == 13) {
+				onSendPublicMessageBtClick();
+		    }
+		});
+
 	    });
 	</script>
 </head>
@@ -27,19 +38,21 @@
 <div id="left_chat_part">
 		<div id="chatHeader">
 		<div id="chatHeader_container">
-			Paranoid Android
+			<div>Paranoid Android</div>
 		</div>
 		</div>
 		<div id="messageWindow">
 		<img id="logo" src="images/mars-tefo.png">
-		<div id="messageWindow_container" class="scrollbar leftscrollbar"></div>
+		<div id="scrollbar_window" class="scrollbar leftscrollbar">
+			<div id="messageWindow_container"></div>
+		</div>
 		</div>
 		<div id="bottom_menu">
 			<div id="bottom_menu_leftContainer">
 				<div id="nick">@НЭЛ</div>
-				<input type="text" name="input message" id="inputMessage">
 			</div>
 			<div id="bottom_menu_rightContainer">
+				<input type="text" name="input message" id="inputMessage" placeholder="Введите сообщение">
 				<img src="images/send_icon.png" id="send_icon">
 			</div>
 		</div>
@@ -47,8 +60,8 @@
 <div id="right_chat_part">
 	<div class="inner_cont">
 			<!--Content-->
-				<div id="roomList" class="scrollbar">
-					<div id="roomlist_container">
+				<div id="userList" class="scrollbar">
+					<div id="userlist_container">
 					</div>
 				</div>
 				<button id="settingsButton" class="chatButton">ОТПРАВЛЯТЬ ВСЕМ</button>

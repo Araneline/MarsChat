@@ -1,4 +1,6 @@
 var sfs = null;
+var roomsArray = [];
+var usersArray = [];
 
 function init()
 {
@@ -31,12 +33,12 @@ function init()
 	sfs.addEventListener(SFS2X.SFSEvent.LOGIN_ERROR, onLoginError, this);
 	sfs.addEventListener(SFS2X.SFSEvent.LOGIN, onLogin, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.LOGOUT, onLogout, this);
-	//sfs.addEventListener(SFS2X.SFSEvent.ROOM_JOIN_ERROR, onRoomJoinError, this);
-	//sfs.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, onRoomJoin, this);
+	sfs.addEventListener(SFS2X.SFSEvent.ROOM_JOIN_ERROR, onRoomJoinError, this);
+	sfs.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, onRoomJoin, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.USER_COUNT_CHANGE, onUserCountChange, this);
-	//sfs.addEventListener(SFS2X.SFSEvent.USER_ENTER_ROOM, onUserEnterRoom, this);
-	//sfs.addEventListener(SFS2X.SFSEvent.USER_EXIT_ROOM, onUserExitRoom, this);
-	//sfs.addEventListener(SFS2X.SFSEvent.PUBLIC_MESSAGE, onPublicMessage, this);
+	sfs.addEventListener(SFS2X.SFSEvent.USER_ENTER_ROOM, onUserEnterRoom, this);
+	sfs.addEventListener(SFS2X.SFSEvent.USER_EXIT_ROOM, onUserExitRoom, this);
+	sfs.addEventListener(SFS2X.SFSEvent.PUBLIC_MESSAGE, onPublicMessage, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, onRoomVariablesUpdate, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.USER_VARIABLES_UPDATE, onUserVariablesUpdate, this);
 }
@@ -76,6 +78,11 @@ function onLogin(event)
 	// Set user name
 	$("#usernameIn").val(event.user.name);
 
+	var rooms = sfs.roomManager.getRoomList();
+
+	if (sfs.lastJoinedRoom == null || room.id != sfs.lastJoinedRoom.id)
+		sfs.send(new SFS2X.JoinRoomRequest(rooms[0]));
+
 	// Populate rooms list
 	populateRoomsList();
 }
@@ -94,28 +101,48 @@ function onRoomJoinError(event)
 function onRoomJoin(event)
 {
 	trace("Room joined: " + event.room);
+	writeToChatArea("<em>Вы присоединились к " + event.room.name + "</em>");
 
-	// Enable interface
-	//enableChatArea(true, true);
-
-	writeToChatArea("<em>You entered room '" + event.room.name + "'</em>");
-
-	//showRoomTopic(event.room);
-
+	populateUsersList();
 }
 
+function onPublicMessage(event)
+{
+	var sender = (event.sender.isItMe ? "You" : event.sender.name);
+	var nick = event.sender.getVariable("nick");
+	var aka = (!event.sender.isItMe && nick != null ? " (aka '" + nick.value + "')" : "");
+	writeToChatArea("@" + sender + aka + ": " + event.message);
+}
+
+function onUserEnterRoom(event)
+{
+	writeToChatArea("<em>Пользователь " + event.user.name + " присоединился к комнате</em>");
+	populateUsersList();
+}
+
+function onUserExitRoom(event)
+{
+	if (!event.user.isItMe)
+		writeToChatArea("<em>Пользователь " + event.user.name + " покинул комнату</em>");
+
+	populateUsersList();
+}
 //------------------------------------
 // BUTTON FUNCTIONS
 //------------------------------------
-function onRoomSelected(event)
+function onSendPublicMessageBtClick()
 {
-	var args = event.args;
-    var item = $("#roomList").jqxListBox("getItem", args.index);
-	var room = item.originalItem.roomObj;
+	var isSent = sfs.send(new SFS2X.PublicMessageRequest($("#inputMessage").val()));
 
+	if (isSent)
+		$("#inputMessage").val("");
+}
+
+function onRoomClick(room)
+{
 	// Join selected room
 	if (sfs.lastJoinedRoom == null || room.id != sfs.lastJoinedRoom.id)
-		sfs.send(new SFS2X.JoinRoomRequest(room));
+		sfs.send(new SFS2X.JoinRoomRequest(roomsArray[room.attr('val')]));
 }
 //------------------------------------
 // OTHER FUNCTIONS
@@ -124,22 +151,28 @@ function writeToChatArea(text)
 {
 	$("#messageWindow_container").append("<p class='chatAreaElement'>" + text + "</p>");
 }
-
-function searchRoomList(roomId)
+function populateUsersList()
 {
-	var items = $('.rooms');
+	var source = [];
+	usersArray = [];
 
-	for (var i = 0; i < items.length; i++)
+	$("#userlist_container").empty();
+
+	if (sfs.lastJoinedRoom != null)
 	{
-		var room = items[i].roomObj;
+		var users = sfs.lastJoinedRoom.getUserList();
 
-		if (room.id == roomId)
-			return i;
+		for (var u in users)
+		{
+			var user = users[u];
+
+			$("#userlist_container").append("<button class=\"chatButton rooms\" val=\"" + u + "\">" + user.name + "</button>");
+			usersArray[u] = user;
+
+		}
 	}
 
-	return -1;
 }
-
 function populateRoomsList()
 {
 	var rooms = sfs.roomManager.getRoomList();
@@ -152,11 +185,15 @@ function populateRoomsList()
 		var room = rooms[r];
 		//item.html = "<div><p class='itemTitle'><strong>" + room.name + "</strong>" + (room.isPasswordProtected ? " <img src='images/lock.png'/>" : "") + "</p>" +
 		//			"<p class='itemSub'>Users: " + room.userCount + "/" + room.maxUsers + "</p></div>";
-		$("#roomlist_container").append("<button class=\"chatButton rooms\">" + room.name + "</button>");
-		
+		$("#roomlist_container").append("<button class=\"chatButton rooms\" val=\"" + r + "\">" + room.name + "</button>");
+		roomsArray[r] = room;
 	}
-}
 
+
+	$(".rooms").click(function() {
+		onRoomClick($(this));
+	});
+}
 
 function trace(txt, showAlert)
 {

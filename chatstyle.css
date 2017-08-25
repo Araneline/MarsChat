@@ -38,6 +38,9 @@ body {
   height: 100%;
   margin: 0;
 }
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgb(85,71,61);
+}
 .bordered-item {
   border: 2px solid rgb(195,246,249);
 }
@@ -68,7 +71,7 @@ body {
   flex: 1;
   padding: 8.89vh 3.33vw 5.93vh 3.33vw;
 }
-#roomList {
+#userList {
   height: 68.15vh;
   margin-bottom: 8.15vh;
 }
@@ -123,6 +126,9 @@ body {
   padding: 0 3.33vw 5.93vh 3.33vw;
 }
 #messageWindow_container {
+    direction: ltr;
+}
+#scrollbar_window {
   height: 100%;
 }
 #logo {
@@ -145,26 +151,31 @@ body {
   border-bottom: 2px solid rgb(195,246,249);
 }
 #bottom_menu {
-  flex: 1.6875;
-  padding:  0 3.33vw 2.96vh 3.33vw;
-  border-top: 2px solid rgb(195,246,249);
-  display: flex;
-  justify-content: start;
-  align-items: center;
-}
-#bottom_menu_leftContainer {
-  height: 100%;
+    flex: 1.6875;
+    padding: 0 3.33vw 2.96vh 3.33vw;
+    border-top: 2px solid rgb(195,246,249);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: self-start;
 }
 #bottom_menu_rightContainer {
-  height: 100%;
   width: 100%;
-      display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: stretch;
 }
 #send_icon {
+  cursor: pointer;
   width: 6.67vw;
+  flex: 1;
   height: auto;
+
+  transition: all 0.2s linear;
+}
+#send_icon:hover {
+  opacity: 0.65;
 }
 #nick {
   font-family: 'EuropeExt';
@@ -174,13 +185,23 @@ body {
   display: flex;
   align-items: center;
 }
-#inputMessage {
+#inputMessage {    
   font-family: 'PFDinTextPro-Regular';
-  height: 8.8vh;
-  width: 46.6vw;
+  flex: 8;
+  height: 4.8vw;
   padding: 0 1vw;
+  margin-right: 3.33vw;
   border: 2px solid rgb(195,246,249);
   color: rgb(195,246,249);
   font-size: 1.8vw;
   background: transparent;
+}
+#inputMessage:focus {
+  outline: none;
+}
+.chatAreaElement {
+  font-family: 'PFDinTextPro-Regular';
+  color: rgb(195,246,249);
+  font-size: 1vw;
+  margin: 0.1em 0 0.1em 0.5em;
 }
