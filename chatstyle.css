@@ -1,0 +1,186 @@
+@font-face {
+  font-family: 'PFDinTextPro-Regular';
+  src: url('fonts/PFDinTextPro-Regular.eot');
+  src: url('fonts/PFDinTextPro-Regular.eot?#iefix') format('eot'),
+       url('fonts/PFDinTextPro-Regular.woff') format('woff'),
+       url('fonts/PFDinTextPro-Regular.ttf') format('truetype'),
+       url('fonts/PFDinTextPro-Regular.svg') format('svg');
+}
+@font-face {
+  font-family: 'PFDinTextPro-Medium';
+  src: url('fonts/PFDinTextPro-Medium.eot');
+  src: url('fonts/PFDinTextPro-Medium.eot?#iefix') format('eot'),
+       url('fonts/PFDinTextPro-Medium.woff') format('woff'),
+       url('fonts/PFDinTextPro-Medium.ttf') format('truetype'),
+       url('fonts/PFDinTextPro-Medium.svg') format('svg');
+}
+@font-face {
+  font-family: 'EuropeExt';
+  src: url('EuropeExtBold.eot');
+  src: url('fonts/EuropeExtBold.eot?#iefix') format('eot'),
+       url('fonts/EuropeExtBold.woff') format('woff'),
+       url('fonts/EuropeExtBold.ttf') format('truetype'),
+       url('fonts/EuropeExtBold.svg') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+html {
+  height: 100%;
+}
+body {
+  background: rgb(10,18,21);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  display: -webkit-flex;
+  -webkit-align-items: stretch;
+  -webkit-justify-content: center;
+  height: 100%;
+  margin: 0;
+}
+.bordered-item {
+  border: 2px solid rgb(195,246,249);
+}
+.container {
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;  
+  display: -webkit-flex;
+}
+#left_chat_part {
+  flex: 1.81;
+  border-right: 2px solid rgb(195,246,249);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: stretch;  
+}
+#right_chat_part {
+  flex: 1;
+  display: flex;
+}
+.inner_cont {
+  position: relative;
+  flex: 1;
+  padding: 8.89vh 3.33vw 5.93vh 3.33vw;
+}
+#roomList {
+  height: 68.15vh;
+  margin-bottom: 8.15vh;
+}
+.scrollbar {
+  overflow-y: scroll;
+}
+.scrollbar::-webkit-scrollbar-track
+{
+  border: 2px solid rgb(195,246,249);
+  background: transparent;
+  border-width: 0 2px 0 2px;
+}
+.scrollbar::-webkit-scrollbar
+{
+  background: transparent;
+  width: 1.67vw;
+}
+.scrollbar::-webkit-scrollbar-thumb
+{
+  background-color: rgb(195,246,249);
+  border: 4px solid transparent;
+  border-radius: 5px;
+  background-clip: content-box;
+}
+.leftscrollbar {
+    overflow-y:scroll;
+    direction: rtl;
+}
+.rooms {
+  width: 23.33vw;
+  margin-bottom: 2.96vh;
+}
+.chatButton {
+  height: 8.89vh;
+  background: transparent;
+  border: 2px solid rgb(195,246,249);
+  border-radius: 8px;
+  font-family: 'EuropeExt';
+  color: rgb(195,246,249);
+  font-size: 1.8vw;
+  cursor: pointer;
+}
+.chatButton:hover {
+  background: rgb(0,98,125);
+}
+#settingsButton {
+  width: 100%;  
+}
+#messageWindow {
+  position: relative;
+  flex: 5.5;
+  padding: 0 3.33vw 5.93vh 3.33vw;
+}
+#messageWindow_container {
+  height: 100%;
+}
+#logo {
+  position: absolute;
+  bottom: 5.93vh;
+  right: 3.33vw;
+  width: 19.0625vw;
+  height: auto;
+}
+#chatHeader {
+  flex: 1;
+  padding: 0 3.33vw 2.96vh 3.33vw;
+}
+#chatHeader_container {
+  font-family: 'EuropeExt';
+  color: rgb(195,246,249);
+  font-size: 1.8vw;
+  line-height: 10vh;
+  height: 100%;
+  border-bottom: 2px solid rgb(195,246,249);
+}
+#bottom_menu {
+  flex: 1.6875;
+  padding:  0 3.33vw 2.96vh 3.33vw;
+  border-top: 2px solid rgb(195,246,249);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+#bottom_menu_leftContainer {
+  height: 100%;
+}
+#bottom_menu_rightContainer {
+  height: 100%;
+  width: 100%;
+      display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+#send_icon {
+  width: 6.67vw;
+  height: auto;
+}
+#nick {
+  font-family: 'EuropeExt';
+  color: rgb(195,246,249);
+  font-size: 1.8vw;
+  height: 8.14vh;
+  display: flex;
+  align-items: center;
+}
+#inputMessage {
+  font-family: 'PFDinTextPro-Regular';
+  height: 8.8vh;
+  width: 46.6vw;
+  padding: 0 1vw;
+  border: 2px solid rgb(195,246,249);
+  color: rgb(195,246,249);
+  font-size: 1.8vw;
+  background: transparent;
+}
