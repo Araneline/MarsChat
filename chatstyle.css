@@ -143,6 +143,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 #messageWindow {
   position: relative;
   flex: 5.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
   padding: 0 3.33vw 5.93vh 3.33vw;
 }
 #messageWindow_container {
