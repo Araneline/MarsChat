@@ -59,8 +59,7 @@ function onConnection(event)
 		var query = "" + window.location;
 		console.log("input:" + query);
 		query = query.split('?');
-		query = query[1].match(/=[a-zA-Zа-яА-Я0-9]+/).toString();
-		query = query.replace('=','');
+		query = query[1].match(/[a-zA-Zа-яА-Я0-9]+/).toString();
 		
 		var uName = query;
 		var isSent = sfs.send(new SFS2X.LoginRequest(uName));
@@ -168,14 +167,14 @@ function onPublicMessage(event)
 
 function onUserEnterRoom(event)
 {
-	writeToChatArea("<em>Пользователь " + event.user.name + " присоединился к комнате</em>");
+	writeToChatArea("<em>" + event.user.name + " на связи</em>");
 	populateUsersList();
 }
 
 function onUserExitRoom(event)
 {
 	if (!event.user.isItMe)
-		writeToChatArea("<em>Пользователь " + event.user.name + " покинул комнату</em>");
+		writeToChatArea("<em>Связь с " + event.user.name + " потеряна</em>");
 
 	populateUsersList();
 }
