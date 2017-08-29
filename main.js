@@ -58,7 +58,7 @@ function onConnection(event)
 		// Perform login
 		var query = "" + window.location;
 		console.log("input:" + query);
-		query = query.split('?');
+		query = query.split('user=');
 		query = query[1].match(/[a-zA-Zа-яА-Я0-9]+/).toString();
 		
 		var uName = query;
@@ -88,7 +88,7 @@ function onLogin(event)
 		  "\n\tData: " + event.data);
 
 	// Set user name
-	$("#nick").html("@" + event.user.name);
+	$("#nick").html(event.user.name);
 
 
 	var rooms = sfs.roomManager.getRoomList();
