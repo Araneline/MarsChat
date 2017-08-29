@@ -223,7 +223,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 .chatAreaElement {
   font-family: 'PFDinTextPro-Regular';
   color: rgb(195,246,249);
-  font-size: 1vw;
+  font-size: 2.5vh;
   margin: 0.1em 0 0.1em 0.5em;
 }
 .broadcast {

@@ -117,7 +117,7 @@ function onRoomJoinError(event)
 function onRoomJoin(event)
 {
 	trace("Room joined: " + event.room);
-	writeToChatArea("<em>Вы присоединились к " + event.room.name + "</em>");
+	writeToChatArea("<em>Вы на связи</em>");
 
 	populateUsersList();
 }
@@ -280,7 +280,7 @@ function populateUsersList()
 				}	
 				item +=  "\" val=\"" + user.id + "\">" + user.name + "</button>";
 				$("#userlist_container").append(item);		
-				usersArray[u] = user;
+				usersArray[u] = user.id;
 			}
 		}
 
