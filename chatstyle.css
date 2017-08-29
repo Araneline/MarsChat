@@ -137,6 +137,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 #toAllButton {
   width: 100%;  
 }
+#toAllButton.active {
+  background: rgb(121,183,0);
+}
 #messageWindow {
   position: relative;
   flex: 5.5;

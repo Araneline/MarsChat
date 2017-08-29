@@ -56,7 +56,13 @@ function onConnection(event)
 		trace("Connected to SmartFoxServer 2X!");
 
 		// Perform login
-		var uName = "ParanoidAndroid";
+		var query = "" + window.location;
+		console.log("input:" + query);
+		query = query.split('?');
+		query = query[1].match(/=[a-zA-Zа-яА-Я0-9]+/).toString();
+		query = query.replace('=','');
+		
+		var uName = query;
 		var isSent = sfs.send(new SFS2X.LoginRequest(uName));
 	}
 	else
@@ -83,7 +89,8 @@ function onLogin(event)
 		  "\n\tData: " + event.data);
 
 	// Set user name
-	$("#usernameIn").val(event.user.name);
+	$("#nick").html("@" + event.user.name);
+
 
 	var rooms = sfs.roomManager.getRoomList();
 
@@ -151,10 +158,10 @@ function onPublicMessage(event)
 	var nick = event.sender.getVariable("nick");
 	var message = "<span class=\"broadcast\">@" + sender + ": " + event.message + "</span>";
 	for (i=0; i < usersArray.length; i++) {
-		if (privateChats[usersArray[i].id] == null)
-			privateChats[usersArray[i].id] = {queue:[], toRead:0};
+		if (privateChats[usersArray[i]] == null)
+			privateChats[usersArray[i]] = {queue:[], toRead:0};
 
-		privateChats[usersArray[i].id].queue.push(message);
+		privateChats[usersArray[i]].queue.push(message);
 	}
 	writeToChatArea(message);
 }
@@ -175,10 +182,18 @@ function onUserExitRoom(event)
 //------------------------------------
 // BUTTON FUNCTIONS
 //------------------------------------
+function onToAllClick() {
+	var button = $("#toAllButton");
+	if (!button.hasClass('active')) {
+		$("#toAllButton").addClass('active');
+	} else {
+		$("#toAllButton").removeClass('active');
+	}	
+}
 function onUserClick(user)
 {
 		var id = $(user).attr('val');
-				
+		$("#chatWith").html("@" + $(user).html());
 		// Enable private chat
 		if (currentPrivateChat != id)
 			enablePrivateChat(id);
@@ -190,10 +205,23 @@ function onUserClick(user)
 }
 function onSendPublicMessageBtClick()
 {
-	var isSent = sfs.send(new SFS2X.PublicMessageRequest($("#inputMessage").val()));
+	var message = $("#inputMessage").val();
+	if (message != '') {
+		if ($('#toAllButton').hasClass('active')) {
+			var isSent = sfs.send(new SFS2X.PublicMessageRequest(message));
+			if (isSent)
+				$("#inputMessage").val("");	
+		} else {
+				var params = new SFS2X.SFSObject();
+				params.putInt("recipient", parseInt(currentPrivateChat));
 
-	if (isSent)
-		$("#inputMessage").val("");
+				var isSent = sfs.send(new SFS2X.PrivateMessageRequest(message, parseInt(currentPrivateChat), params));
+
+				if (isSent)
+					$("#inputMessage").val("");
+		}
+		
+	}
 }
 
 function onRoomClick(room)
