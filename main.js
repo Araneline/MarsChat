@@ -2,6 +2,7 @@ var sfs = null;
 var roomsArray = [];
 var usersArray = [];
 var privateChats;
+var needed_room;
 
 function init()
 {
@@ -15,6 +16,7 @@ function init()
 	config.debug = true;
 	config.useSSL = false;
 
+	needed_room = "The Lobby";
 	// Create SmartFox client instance
 	sfs = new SFS2X.SmartFox(config);
 
@@ -94,7 +96,10 @@ function onLogin(event)
 	var rooms = sfs.roomManager.getRoomList();
 
 	if (sfs.lastJoinedRoom == null || room.id != sfs.lastJoinedRoom.id)
-		sfs.send(new SFS2X.JoinRoomRequest(rooms[0]));
+		for (i=0; i<rooms.length; i++) {
+			if (rooms[i].name == needed_room)
+				sfs.send(new SFS2X.JoinRoomRequest(rooms[i].id));		
+		}		
 
 	currentPrivateChat = -1;
 	privateChats = [];
