@@ -100,9 +100,26 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     overflow-y:scroll;
     direction: rtl;
 }
-.rooms {
+.users {
   width: 23.33vw;
   margin-bottom: 2.96vh;
+}
+.users.current {
+  background: rgb(0,98,125);
+}
+.users.unread {
+  animation: user_blink 2s infinite;
+}
+@keyframes user_blink {
+  0% {
+    background: rgba(0,98,125,0);
+  }
+  50% {
+    background: rgba(0,98,125,0.5);
+  }
+  100% {
+    background: rgba(0,98,125,0);
+  }
 }
 .chatButton {
   height: 8.89vh;
@@ -117,7 +134,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 .chatButton:hover {
   background: rgb(0,98,125);
 }
-#settingsButton {
+#toAllButton {
   width: 100%;  
 }
 #messageWindow {
@@ -137,6 +154,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   right: 3.33vw;
   width: 19.0625vw;
   height: auto;
+  opacity: 0.3;
 }
 #chatHeader {
   flex: 1;
@@ -204,4 +222,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: rgb(195,246,249);
   font-size: 1vw;
   margin: 0.1em 0 0.1em 0.5em;
+}
+.broadcast {
+  color: rgb(121,183,0);
 }

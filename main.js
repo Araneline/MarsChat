@@ -1,6 +1,7 @@
 var sfs = null;
 var roomsArray = [];
 var usersArray = [];
+var privateChats;
 
 function init()
 {
@@ -29,7 +30,7 @@ function init()
 
 	// Add event listeners
 	sfs.addEventListener(SFS2X.SFSEvent.CONNECTION, onConnection, this);
-	//sfs.addEventListener(SFS2X.SFSEvent.CONNECTION_LOST, onConnectionLost, this);
+	sfs.addEventListener(SFS2X.SFSEvent.CONNECTION_LOST, onConnectionLost, this);
 	sfs.addEventListener(SFS2X.SFSEvent.LOGIN_ERROR, onLoginError, this);
 	sfs.addEventListener(SFS2X.SFSEvent.LOGIN, onLogin, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.LOGOUT, onLogout, this);
@@ -39,6 +40,7 @@ function init()
 	sfs.addEventListener(SFS2X.SFSEvent.USER_ENTER_ROOM, onUserEnterRoom, this);
 	sfs.addEventListener(SFS2X.SFSEvent.USER_EXIT_ROOM, onUserExitRoom, this);
 	sfs.addEventListener(SFS2X.SFSEvent.PUBLIC_MESSAGE, onPublicMessage, this);
+	sfs.addEventListener(SFS2X.SFSEvent.PRIVATE_MESSAGE, onPrivateMessage, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, onRoomVariablesUpdate, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.USER_VARIABLES_UPDATE, onUserVariablesUpdate, this);
 }
@@ -62,6 +64,11 @@ function onConnection(event)
 		trace("Connection failed: " + (event.errorMessage ? event.errorMessage + " (" + event.errorCode + ")" : "Is the server running at all?"), true);
 	}
 }
+function onConnectionLost(event)
+{
+	init();
+	sfs.connect();
+}
 
 function onLoginError(event)
 {
@@ -83,6 +90,8 @@ function onLogin(event)
 	if (sfs.lastJoinedRoom == null || room.id != sfs.lastJoinedRoom.id)
 		sfs.send(new SFS2X.JoinRoomRequest(rooms[0]));
 
+	currentPrivateChat = -1;
+	privateChats = [];
 	// Populate rooms list
 	populateRoomsList();
 }
@@ -106,12 +115,48 @@ function onRoomJoin(event)
 	populateUsersList();
 }
 
+function onPrivateMessage(event)
+{
+	var user;
+
+	if (event.sender.isItMe)
+	{
+		var userId = event.data.get("recipient"); // "data" is an SFSObject
+		user = sfs.userManager.getUserById(userId);
+	}
+	else
+		user = event.sender;
+
+	if (privateChats[user.id] == null)
+		privateChats[user.id] = {queue:[], toRead:0};
+
+	var message = "@" + (event.sender.isItMe ? "Вы" : event.sender.name) + ": " + event.message;
+	
+	privateChats[user.id].queue.push(message);
+
+	if (currentPrivateChat == user.id)
+		writeToChatArea(message);
+	else
+	{
+		privateChats[user.id].toRead += 1;
+
+		// For code simplicity we rebuild the full userlist instead of just editing the specific item
+		// This causes # of PM to read being displayed
+		populateUsersList();
+	}
+}
 function onPublicMessage(event)
 {
-	var sender = (event.sender.isItMe ? "You" : event.sender.name);
+	var sender = (event.sender.isItMe ? "Вы" : event.sender.name);
 	var nick = event.sender.getVariable("nick");
-	var aka = (!event.sender.isItMe && nick != null ? " (aka '" + nick.value + "')" : "");
-	writeToChatArea("@" + sender + aka + ": " + event.message);
+	var message = "<span class=\"broadcast\">@" + sender + ": " + event.message + "</span>";
+	for (i=0; i < usersArray.length; i++) {
+		if (privateChats[usersArray[i].id] == null)
+			privateChats[usersArray[i].id] = {queue:[], toRead:0};
+
+		privateChats[usersArray[i].id].queue.push(message);
+	}
+	writeToChatArea(message);
 }
 
 function onUserEnterRoom(event)
@@ -130,6 +175,19 @@ function onUserExitRoom(event)
 //------------------------------------
 // BUTTON FUNCTIONS
 //------------------------------------
+function onUserClick(user)
+{
+		var id = $(user).attr('val');
+				
+		// Enable private chat
+		if (currentPrivateChat != id)
+			enablePrivateChat(id);
+
+		// For example code simplicity we rebuild the full userlist instead of just editing the specific item
+		// This causes # of PM to read being updated
+		populateUsersList();
+	
+}
 function onSendPublicMessageBtClick()
 {
 	var isSent = sfs.send(new SFS2X.PublicMessageRequest($("#inputMessage").val()));
@@ -147,6 +205,25 @@ function onRoomClick(room)
 //------------------------------------
 // OTHER FUNCTIONS
 //------------------------------------
+function enablePrivateChat(userId)
+{
+	currentPrivateChat = userId;
+
+	doEnable = (userId > -1);
+
+	// Clear current chat
+		$("#messageWindow_container").html("");
+
+		// Fill chat with history
+		if (privateChats[userId] != null)
+		{
+			privateChats[userId].toRead = 0;
+
+			for (var i = 0; i < privateChats[userId].queue.length; i++)
+				writeToChatArea(privateChats[userId].queue[i]);
+		}
+}
+
 function writeToChatArea(text)
 {
 	$("#messageWindow_container").append("<p class='chatAreaElement'>" + text + "</p>");
@@ -161,17 +238,28 @@ function populateUsersList()
 	if (sfs.lastJoinedRoom != null)
 	{
 		var users = sfs.lastJoinedRoom.getUserList();
-
 		for (var u in users)
 		{
 			var user = users[u];
-
-			$("#userlist_container").append("<button class=\"chatButton rooms\" val=\"" + u + "\">" + user.name + "</button>");
-			usersArray[u] = user;
-
+			
+			if (!user.isItMe) {
+				item = "<button class=\"chatButton users";
+				if (privateChats[user.id] != null && privateChats[user.id].toRead > 0) {
+					 item += " unread";
+				} else {
+					if (currentPrivateChat > -1 && user.id == currentPrivateChat)
+						item+= " current"
+				}	
+				item +=  "\" val=\"" + user.id + "\">" + user.name + "</button>";
+				$("#userlist_container").append(item);		
+				usersArray[u] = user;
+			}
 		}
-	}
 
+		$('.users').click(function() {
+			onUserClick(this);
+		});
+	}
 }
 function populateRoomsList()
 {
