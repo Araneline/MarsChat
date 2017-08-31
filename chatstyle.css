@@ -326,6 +326,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   padding-top: 2.96vh;
 }
 .key {
+    cursor: pointer;
     float: left;
     display: flex;
     align-items: center;
@@ -334,6 +335,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     font-family: 'EuropeExt';
     color: rgb(195,246,249);
     font-size: 1.3vw;
+    text-transform: uppercase;
     margin-right: 0.47vw;
 }
 .key_inside {
@@ -385,10 +387,10 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   display:block;
 }
 #keyboard_icon_container {
-  flex: 8.1;
+  flex: 7.1;
 }
 #send_icon_container {
-  flex: 8.1;
+  flex: 7.1;
 }
 .fullWidth {
   width: 100%;
