@@ -50,25 +50,31 @@
 		</div>
 		</div>
 		<div id="bottom_menu">
+			<div id="keyboard_icon_container"><img id="keyboard_icon" class="img-responsive icon" src="images/keyboard_icon.png"></div>
 			<div id="bottom_menu_leftContainer">
 				<div id="chatWith">Общий чат</div>
+				<div class="fullWidth"><input type="text" name="input message" id="inputMessage" placeholder="Введите сообщение"></div>
 			</div>
-			<div id="bottom_menu_rightContainer">
-				<input type="text" name="input message" id="inputMessage" placeholder="Введите сообщение">
-				<img src="images/send_icon.png" id="send_icon">
-			</div>
+			<div id="send_icon_container"><img class="img-responsive icon" id="send_icon" src="images/send_icon.png"></div>
 		</div>
 </div>
 <div id="right_chat_part">
 	<div class="inner_cont">
-			<!--Content-->
+				<!--Content-->]
 				<div id="userList" class="scrollbar">
 					<div id="userlist_container">
 					</div>
 				</div>
-				<button id="toAllButton" class="chatButton">ОТПРАВЛЯТЬ ВСЕМ</button>
+				<div id="toAllButton_container"><button id="toAllButton" class="chatButton">ОТПРАВЛЯТЬ ВСЕМ</button></div>
 	</div>
+	<div id="keyboard_container"></div>
 </div>
 </div>
 </body>
 </html>
+
+<script>
+	$('#keyboard_icon').click(function(){
+		$('#bottom_menu').attr('flex','10');
+	});
+</script>
