@@ -94,7 +94,6 @@ function onLogin(event)
 
 
 	var rooms = sfs.roomManager.getRoomList();
-
 	if (sfs.lastJoinedRoom == null || room.id != sfs.lastJoinedRoom.id)
 		for (i=0; i<rooms.length; i++) {
 			if (rooms[i].name == needed_room)
