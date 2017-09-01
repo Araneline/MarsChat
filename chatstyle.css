@@ -112,6 +112,28 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 .users.unread {
   animation: user_blink 2s infinite;
 }
+.fadingOut {
+  animation: fade_out 1s;
+}
+.fadeIn {
+  animation: fade_in 1s; 
+}
+@keyframes fade_in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade_out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 @keyframes user_blink {
   0% {
     background: rgba(0,98,125,0);
@@ -189,14 +211,13 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     flex-direction: row;
     justify-content: start;
     align-items: flex-end;
+    transition: all 1s linear;
 }
 #bottom_menu {
     padding: 0 1.665vw 2.96vh 1.665vw;
     border-top: 2px solid rgb(195,246,249);
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: flex-start;
+    transition: all 1s linear;
+    flex: 1.5;
 }
 #bottom_menu_leftContainer {
   margin: 0 3.33vw;
@@ -246,6 +267,8 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 #en_ru {
   height: 100%;
   width: 6.33%; 
+  text-align: center;
+  font-size: 1.1vw;
 }
 #pad_key {
   border: 0;
@@ -317,11 +340,12 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 .keyboard_row2 {
   height: 18.2%;
   margin-top: 0.47vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;  
 }
 #keyboard_container {
+  width: 100%;
   height: 37.8vh;
   padding-top: 2.96vh;
 }
@@ -337,6 +361,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     font-size: 1.3vw;
     text-transform: uppercase;
     margin-right: 0.47vw;
+}
+.key:hover {
+  background: rgb(121,183,0);
 }
 .key_inside {
   width: 100%;
@@ -395,4 +422,10 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 .fullWidth {
   width: 100%;
   display: flex;
+}
+.pressed {
+  background: rgb(121,183,0);
+}
+.pressedCaps {
+  background: rgb(121,183,0);
 }
