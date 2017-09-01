@@ -156,21 +156,22 @@
 	});
 
 	$('.key').click(function(){
+		var current_cursor = cur_caret();
+		var text = $('#inputMessage').val().slice(0,current_cursor);
+		var text2 = $('#inputMessage').val().slice(current_cursor,$('#inputMessage').val().length);
 		switch ($(this).attr('id')) {
 			case "backspace":
-					var text = $('#inputMessage').val();
 					text = text.slice(0,-1);
+					text += text2;
 					$('#inputMessage').val(text);
 					$("#inputMessage").focus();
+					setCaretToPos(document.getElementById("inputMessage"), current_cursor - 1);
 				break
 			case "enter_low":
 				onSendPublicMessageBtClick();
 				break
 			case "<":
 				$("#inputMessage").focus();
-				el = document.getElementById('inputMessage');
-				var val = el.value;
-    			var current_cursor = val.slice(0, el.selectionStart).length;
 				var prev_length = $("#inputMessage").val().length;
 				if (current_cursor > 0) {
 					setCaretToPos(document.getElementById("inputMessage"), current_cursor - 1);
@@ -189,16 +190,20 @@
 			default:
 				var clicked = $(':nth-child(1)', this).html();
 				if (clicked.length == 1) {
-					var text = $('#inputMessage').val();
-					text += clicked;
+					text += clicked + text2;
 					$('#inputMessage').val(text);
 					$("#inputMessage").focus();
+					setCaretToPos(document.getElementById("inputMessage"), current_cursor + 1);
 				}
 				break
 		}
 	});
 
-
+	function cur_caret() {
+		el = document.getElementById('inputMessage');
+		var val = el.value;
+    	return val.slice(0, el.selectionStart).length;
+	}
 	function setSelectionRange(input, selectionStart, selectionEnd) {
 	  if (input.setSelectionRange) {
 	    input.focus();
