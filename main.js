@@ -107,13 +107,13 @@ function onLogin(event)
 	currentPrivateChat = -1;
 	privateChats = [];
 	// Populate rooms list
-	$('#error_screen').css('opacity','0');
+	$('#error_screen').css('display','none');
 	removePreloader();	
 	populateRoomsList();
 }
 
 function removePreloader() {
-	setTimeout(function(){$('#preload_container').css('display','none'); $('#error_screen').css('display','none');}, 5000);
+	setTimeout(function(){$('#preload_container').css('display','none');}, 5000);
 }
 
 function onRoomJoinError(event)
