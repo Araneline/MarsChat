@@ -45,6 +45,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   border: 2px solid rgb(195,246,249);
 }
 .container {
+  position: relative;
   width: 100%;
   margin: 10px;
   display: flex;
@@ -247,6 +248,10 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   height: 100%;
   width: 9.55%;
 }
+#right_shift {
+  height: 100%;
+  width: 9.55%; 
+}
 #backspace {
   width: 10.33%;
   height: 100%;
@@ -428,4 +433,51 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 .pressedCaps {
   background: rgb(121,183,0);
+}
+#preload_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(10,18,21);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#error_screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(10,18,21);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.error_p {
+    font-family: 'EuropeExt';
+    font-size: 2.2vw;
+    color: rgb(176,146,97);
+    margin: 0;
+}
+.top_p_margin {
+  margin-top: 4.16vw;
+}
+.bottom_p_margin {
+  margin: 4.16vw 0;
+  font-size: 1.8vw;
+}
+#reconnectButton {
+  height: 8.89vh;
+  background: transparent;
+  border: 2px solid rgb(195,246,249);
+  border-radius: 8px;
+  font-family: 'EuropeExt';
+  color: rgb(195,246,249);
+  font-size: 1.8vw;
+  cursor: pointer; 
+  width: 100%;
+}
+#reconnectButton:hover {
+  background: rgb(0,98,125);
 }

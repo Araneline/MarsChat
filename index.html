@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="libs/jquery-1.7.2.min.js"></script>
 
 	<!-- Load SFS2X JS API -->
-	<script type="text/javascript" src="libs/sfs2x-api-1.7.1.js"></script>
+	<script type="text/javascript" src="libs/sfs2x-api-1.7.5.js"></script>
 
 	<!-- Load main script -->
 	<script type="text/javascript" src="main.js"></script>
@@ -37,6 +37,24 @@
 </head>
 <body>
 <div class="container bordered-item">
+<div id="preload_container">
+<video autoplay="autoplay" loop>
+<source src="hex_anim_.mp4" type="video/mp4" />
+</video>
+</div>
+<div id="error_screen">
+	<div style="background: rgb(100,0,3); width: 67.5vw; height: 44.1vw; display: flex; align-items: center; justify-content: center;">
+		<div style="background: rgb(100,0,3); width: 65.3vw; height: 41.8vw; border: 0.5vw solid black; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+			<img src="images/danger_icon.png" style="width: 15.3vw; height: auto;">
+			<p class="error_p top_p_margin">СОЕДИНЕНИЕ РАЗОРВАНО</p>
+			<p class="error_p">ПО НЕИЗВЕСТНОЙ ПРИЧИНЕ</p>
+			<div>
+			<p class="error_p bottom_p_margin">ПРОВЕРЬТЕ ЖУРНАЛ ОШИБОК СЕРВЕРА</p>
+			<button id="reconnectButton" onclick="reconnectClick()">ВОССТАНОВИТЬ СОЕДИНЕНИЕ</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div id="left_chat_part">
 		<div id="chatHeader">
 		<div id="chatHeader_container">

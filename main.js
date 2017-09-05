@@ -61,10 +61,14 @@ function onConnection(event)
 		var query = "" + window.location;
 		console.log("input:" + query);
 		query = query.split('user=');
-		query = query[1].match(/[a-zA-Zа-яА-Я0-9]+/).toString();
+		if (query[1]) {
+			query = query[1].match(/[a-zA-Zа-яА-Я0-9]+/).toString();
+			var uName = query;
+			var isSent = sfs.send(new SFS2X.LoginRequest(uName));
+		} else {
+			removePreloader();
+		}
 		
-		var uName = query;
-		var isSent = sfs.send(new SFS2X.LoginRequest(uName));
 	}
 	else
 	{
@@ -103,7 +107,13 @@ function onLogin(event)
 	currentPrivateChat = -1;
 	privateChats = [];
 	// Populate rooms list
+	$('#error_screen').css('opacity','0');
+	removePreloader();	
 	populateRoomsList();
+}
+
+function removePreloader() {
+	setTimeout(function(){$('#preload_container').css('display','none'); $('#error_screen').css('display','none');}, 5000);
 }
 
 function onRoomJoinError(event)
@@ -194,6 +204,12 @@ function onToAllClick() {
 	} else {
 		$("#toAllButton").removeClass('active');
 	}	
+}
+function reconnectClick() {
+	$('#preload_container').css('display','flex');
+
+	init();
+	sfs.connect();
 }
 function onUserClick(user)
 {
