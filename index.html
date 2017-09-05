@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="libs/jquery-1.7.2.min.js"></script>
 
 	<!-- Load SFS2X JS API -->
-	<script type="text/javascript" src="libs/sfs2x-api-1.7.5.js"></script>
+	<script type="text/javascript" src="libs/sfs2x-api-1.7.1.js"></script>
 
 	<!-- Load main script -->
 	<script type="text/javascript" src="main.js"></script>
@@ -143,7 +143,7 @@
 		</div></div>
 	</div>
 	<div class="keyboard_row ru2">
-		<div id="shift" class="key"><div class="key_inside">SHIFT</div></div>
+		<div id="shift" class="key shift"><div class="key_inside">SHIFT</div></div>
 		<div class="key key_standart"><div class="key_inside">я</div></div>
 		<div class="key key_standart"><div class="key_inside">ч</div></div>
 		<div class="key key_standart"><div class="key_inside">с</div></div>
@@ -154,10 +154,10 @@
 		<div class="key key_standart"><div class="key_inside">б</div></div>
 		<div class="key key_standart"><div class="key_inside">ю</div></div>
 		<div class="key key_standart"><div class="key_inside">.</div></div>
-		<div id="ctrl" class="key"><div class="key_inside">SHIFT</div></div>
+		<div id="right_shift" class="key right_shift"><div class="key_inside">SHIFT</div></div>
 	</div>
 	<div class="en2 invisible">
-		<div id="shift" class="key"><div class="key_inside">SHIFT</div></div>
+		<div id="shift" class="key shift"><div class="key_inside">SHIFT</div></div>
 		<div class="key key_standart"><div class="key_inside">z</div></div>
 		<div class="key key_standart"><div class="key_inside">x</div></div>
 		<div class="key key_standart"><div class="key_inside">c</div></div>
@@ -168,7 +168,7 @@
 		<div class="key key_standart"><div class="key_inside">,</div></div>
 		<div class="key key_standart"><div class="key_inside">.</div></div>
 		<div class="key key_standart"><div class="key_inside">/</div></div>
-		<div id="ctrl" class="key"><div class="key_inside">SHIFT</div></div>
+		<div id="right_shift" class="key right_shift"><div class="key_inside">SHIFT</div></div>
 	</div>
 	<div class="keyboard_row">
 		<div id="ctrl" class="key"><div class="key_inside">CTRL</div></div>
@@ -244,7 +244,11 @@
 				break
 			case "shift":
 				shift = true;
-				$(this).addClass('pressed');
+				$(".shift").addClass('pressed');
+				break
+			case "right_shift":
+				shift = true;
+				$(".right_shift").addClass('pressed');
 				break
 			case "cl":
 				if ($(this).hasClass('pressedCaps')) {
