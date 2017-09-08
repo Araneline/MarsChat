@@ -222,9 +222,11 @@
 		if ($('#keyboard_container').hasClass('invisible')) {
 			$('#bottom_menu').css('flex','17');
 			$('#keyboard_container').removeClass('invisible');
+			$('#logo').css('opacity','0');
 		} else {
-			$('#bottom_menu').css('flex','');
+			$('#bottom_menu').css('flex','1.5');
 			$('#keyboard_container').addClass('invisible');
+			$('#logo').css('opacity','0.3');
 		}
 	});
 
@@ -261,12 +263,22 @@
 				}
 				break
 			case "shift":
-				shift = true;
-				$(".shift").addClass('pressed');
+				if ($(this).hasClass('pressed')) {
+					shift = false;
+					$(".shift").removeClass('pressed');
+				} else {
+					shift = true;
+					$(".shift").addClass('pressed');
+				}				
 				break
 			case "right_shift":
-				shift = true;
-				$(".right_shift").addClass('pressed');
+				if ($(this).hasClass('pressed')) {
+					shift = false;
+					$(".right_shift").removeClass('pressed');
+				} else {
+					shift = true;
+					$(".right_shift").addClass('pressed');
+				}			
 				break
 			case "cl":
 				if ($(this).hasClass('pressedCaps')) {
