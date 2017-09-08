@@ -245,6 +245,12 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-right: 0;
 }
 #ctrl {
+    cursor: pointer;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.47vw;
   height: 100%;
   width: 9.55%;
 }
@@ -367,9 +373,51 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     text-transform: uppercase;
     margin-right: 0.47vw;
 }
-.key:hover {
-  background: rgb(121,183,0);
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
+.key_inside {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+.key_inside:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgb(195,246,249) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10,10);
+    opacity: 0;
+    transition: transform .5s, opacity 1s;
+  }
+
+.key_inside:active:after {
+    transform: scale(0,0);
+    opacity: .5;
+    transition: 0s;
+  }
+
+
 .key_inside {
   width: 100%;
   height: 100%;

@@ -113,7 +113,7 @@ function onLogin(event)
 }
 
 function removePreloader() {
-	setTimeout(function(){$('#preload_container').css('display','none');}, 5000);
+	setTimeout(function(){$('#preload_container').css('display','none');}, 1000);
 }
 
 function onRoomJoinError(event)
