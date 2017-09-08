@@ -220,12 +220,13 @@
 
 	$('#keyboard_icon').click(function(){
 		if ($('#keyboard_container').hasClass('invisible')) {
+			//$('#keyboard_container').removeClass('invisible');
 			$('#bottom_menu').css('flex','17');
-			$('#keyboard_container').removeClass('invisible');
 			$('#logo').css('opacity','0');
+			setTimeout(function(){$('#keyboard_container').removeClass('invisible')},1000);
 		} else {
-			$('#bottom_menu').css('flex','1.5');
 			$('#keyboard_container').addClass('invisible');
+			$('#bottom_menu').css('flex','1.5');
 			$('#logo').css('opacity','0.3');
 		}
 	});
