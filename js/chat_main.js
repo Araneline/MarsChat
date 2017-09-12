@@ -69,6 +69,8 @@ var caps = false;
 
 		$('#toAllButton').click(function(){onToAllClick()});
 
+		document.addEventListener('contextmenu', event => event.preventDefault());
+
 		var headHeight = $('#chatHeader').height();
 		$('#chatHeader').css('min-height', headHeight);
 		$('#chatHeader_container').css('min-height', headHeight);
