@@ -27,7 +27,7 @@
 <div id="error_screen">
 	<div style="background: rgb(100,0,3); width: 67.5vw; height: 44.1vw; display: flex; align-items: center; justify-content: center;">
 		<div style="background: rgb(100,0,3); width: 65.3vw; height: 41.8vw; border: 0.5vw solid black; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-			<img src="images/danger_icon.png" style="width: 15.3vw; height: auto;">
+			<img src="images/danger_icon.png" style="width: 15.3vw; height: auto;" class="unselectable">
 			<p class="error_p top_p_margin">СОЕДИНЕНИЕ РАЗОРВАНО</p>
 			<p class="error_p">ПО НЕИЗВЕСТНОЙ ПРИЧИНЕ</p>
 			<div>
@@ -40,23 +40,23 @@
 <div id="left_chat_part">
 		<div id="chatHeader">
 		<div id="chatHeader_container">
-			<div id="nick">Ник</div>
+			<div id="nick" class="unselectable">Ник</div>
 		</div>
 		</div>
 		<div id="messageWindow">
-		<img id="logo" src="images/mars-tefo.png">
+		<img id="logo" src="images/mars-tefo.png" class="unselectable">
 		<div id="scrollbar_window" class="scrollbar leftscrollbar">
 			<div id="messageWindow_container"></div>
 		</div>
 		</div>
 		<div id="bottom_menu">
 			<div id="bottom_container">
-			<div id="keyboard_icon_container"><img id="keyboard_icon" class="img-responsive icon" src="images/keyboard_icon.png"></div>
+			<div id="keyboard_icon_container"><img id="keyboard_icon" class="img-responsive icon unselectable" src="images/keyboard_icon.png"></div>
 			<div id="bottom_menu_leftContainer">
-				<div id="chatWith">Общий канал</div>
+				<div id="chatWith" class="unselectable">Общий канал</div>
 				<div class="fullWidth"><input type="text" name="input message" id="inputMessage" placeholder="Введите сообщение"></div>
 			</div>
-			<div id="send_icon_container"><img class="img-responsive icon" id="send_icon" src="images/send_icon.png"></div>
+			<div id="send_icon_container"><img class="img-responsive unselectable icon" id="send_icon" src="images/send_icon.png"></div>
 			</div>
 	<div id="keyboard_container" class="invisible">
 	<div class="keyboard_row2" style="margin-top: 0;">
@@ -120,8 +120,8 @@
 		<div class="key key_standart"><div class="key_inside">ж</div></div>
 		<div class="key key_standart"><div class="key_inside">э</div></div>
 		<div id="enter_low" class="key" style="align-items: flex-end;"><div id="enter-container">
-			<div id="one"><div id="one_one"><img id="bg_image" src="images/bg_color.png"></div></div>
-			<div id="two"><div id="two_one"><img src="images/enter-image.png" style="padding: 2px;" class="img-responsive"></div></div>
+			<div id="one"><div id="one_one"><img class="unselectable" id="bg_image" src="images/bg_color.png"></div></div>
+			<div id="two"><div id="two_one"><img src="images/enter-image.png" style="padding: 2px;" class="img-responsive unselectable"></div></div>
 		</div></div>
 	</div>
 	<div class="en invisible">
@@ -138,8 +138,8 @@
 		<div class="key key_standart"><div class="key_inside">;</div></div>
 		<div class="key key_standart"><div class="key_inside">'</div></div>
 		<div id="enter_low" class="key" style="align-items: flex-end;"><div id="enter-container">
-			<div id="one"><div id="one_one"><img id="bg_image" src="images/bg_color.png"></div></div>
-			<div id="two"><div id="two_one"><img src="images/enter-image.png" style="padding: 2px;" class="img-responsive"></div></div>
+			<div id="one"><div id="one_one"><img class="unselectable" id="bg_image" src="images/bg_color.png"></div></div>
+			<div id="two"><div id="two_one"><img src="images/enter-image.png" style="padding: 2px;" class="img-responsive unselectable"></div></div>
 		</div></div>
 	</div>
 	<div class="keyboard_row ru2">
