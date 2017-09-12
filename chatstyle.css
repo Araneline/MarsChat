@@ -99,6 +99,24 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   border-radius: 5px;
   background-clip: content-box;
 }
+::-moz-scrollbar-track
+{
+  border: 2px solid rgb(195,246,249);
+  background: transparent;
+  border-width: 0 2px 0 2px;
+}
+::-moz-scrollbar
+{
+  background: transparent;
+  width: 1.67vw;
+}
+::-moz-scrollbar-thumb
+{
+  background-color: rgb(195,246,249);
+  border: 4px solid transparent;
+  border-radius: 5px;
+  background-clip: content-box;
+}
 .leftscrollbar {
     overflow-y:scroll;
     direction: rtl;
@@ -166,6 +184,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     flex-direction: column;
     align-items: left;
     justify-content: flex-end;
+}
+#toAllButton:focus {
+  outline: none;
 }
 #toAllButton {
   width: 100%;  

@@ -10,20 +10,20 @@ function init()
 
 	// Create configuration object
 	var config = {};
-	config.host = "127.0.0.1";
-	config.port = 8080;
-	config.zone = "BasicExamples";
-	config.debug = true;
-	config.useSSL = false;
-
-	needed_room = "The Lobby";
+	config.host = "192.168.0.168";
+	config.port = 8888;
+	config.zone = "MarsPlanetarium";
+	config.debug = false;
+	config.room = "The Lobby";
+	
 	// Create SmartFox client instance
-	sfs = new SFS2X.SmartFox(config);
+	sfs = new SmartFox(config);
+	
+	// Set client details
+	var platform = navigator.appName;
+	var version = navigator.appVersion;
+	sfs.setClientDetails(platform, version);
 
-	// Set logging
-	sfs.logger.level = SFS2X.LogLevel.DEBUG;
-	sfs.logger.enableConsoleOutput = true;
-	sfs.logger.enableEventDispatching = false;
 
 	//sfs.logger.addEventListener(SFS2X.LoggerEvent.DEBUG, onDebugLogged, this);
 	//sfs.logger.addEventListener(SFS2X.LoggerEvent.INFO, onInfoLogged, this);
@@ -64,7 +64,7 @@ function onConnection(event)
 		if (query[1]) {
 			query = query[1].match(/[a-zA-Zа-яА-Я0-9]+/).toString();
 			var uName = query;
-			var isSent = sfs.send(new SFS2X.LoginRequest(uName));
+			var isSent = sfs.send(new SFS2X.Requests.System.LoginRequest(uName));
 		} else {
 			removePreloader();
 		}
@@ -72,7 +72,7 @@ function onConnection(event)
 	}
 	else
 	{
-		trace("Connection failed: " + (event.errorMessage ? event.errorMessage + " (" + event.errorCode + ")" : "Is the server running at all?"), true);
+		trace("Connection failed: " + (event.errorMessage ? event.errorMessage + " (" + event.errorCode + ")" : "Is the server running at all?"), false);
 	}
 }
 function onConnectionLost(event)
@@ -83,7 +83,8 @@ function onConnectionLost(event)
 
 function onLoginError(event)
 {
-	trace("Login error: " + event.errorMessage + " (" + event.errorCode + ")", true);
+	trace("Login error: " + event.errorMessage + " (" + event.errorCode + ")", false);
+	removePreloader();
 }
 
 function onLogin(event)
@@ -100,8 +101,8 @@ function onLogin(event)
 	var rooms = sfs.roomManager.getRoomList();
 	if (sfs.lastJoinedRoom == null || room.id != sfs.lastJoinedRoom.id)
 		for (i=0; i<rooms.length; i++) {
-			if (rooms[i].name == needed_room)
-				sfs.send(new SFS2X.JoinRoomRequest(rooms[i].id));		
+			if (rooms[i].name == sfs.config.room)
+				sfs.send(new SFS2X.Requests.System.JoinRoomRequest(rooms[i].id));		
 		}		
 
 	currentPrivateChat = -1;
@@ -119,7 +120,7 @@ function removePreloader() {
 function onRoomJoinError(event)
 {
 	trace("Room join error: " + event.errorMessage + " (" + event.errorCode + ")", true);
-
+	removePreloader();
 	// Reset roomlist selection
 	if (sfs.lastJoinedRoom != null)
 	{
@@ -229,14 +230,14 @@ function onSendPublicMessageBtClick()
 	var message = $("#inputMessage").val();
 	if (message != '') {
 		if ($('#toAllButton').hasClass('active')) {
-			var isSent = sfs.send(new SFS2X.PublicMessageRequest(message));
+			var isSent = sfs.send(new SFS2X.Requests.System.PublicMessageRequest(message));
 			if (isSent)
 				$("#inputMessage").val("");	
 		} else {
 				var params = new SFS2X.SFSObject();
 				params.putInt("recipient", parseInt(currentPrivateChat));
 
-				var isSent = sfs.send(new SFS2X.PrivateMessageRequest(message, parseInt(currentPrivateChat), params));
+				var isSent = sfs.send(new SFS2X.Requests.System.PrivateMessageRequest(message, parseInt(currentPrivateChat), params));
 
 				if (isSent)
 					$("#inputMessage").val("");
