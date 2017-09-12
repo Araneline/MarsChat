@@ -69,7 +69,9 @@ var caps = false;
 
 		$('#toAllButton').click(function(){onToAllClick()});
 
-		$('#chatHeader').css('min-height', $('#chatHeader_container').height());
+		var headHeight = $('#chatHeader').height();
+		$('#chatHeader').css('min-height', headHeight);
+		$('#chatHeader_container').css('min-height', headHeight);
 
 		$('#keyboard_icon').click(function(){
 		if ($('#keyboard_container').hasClass('invisible')) {
@@ -165,4 +167,4 @@ var caps = false;
 		}
 	});
 
-	    });
+	});
