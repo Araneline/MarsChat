@@ -202,6 +202,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 #messageWindow_container {
     direction: ltr;
+    padding-left: 3.33vw;
 }
 #scrollbar_window {
   flex: 1;
@@ -481,7 +482,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   font-family: 'PFDinTextPro-Regular';
   color: rgb(195,246,249);
   font-size: 2.5vh;
-  margin: 0.1em 0 0.1em 0.5em;
+  margin: 0.1em 0 0.1em 0;
 }
 .broadcast {
   color: rgb(121,183,0);
