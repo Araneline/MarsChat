@@ -142,7 +142,7 @@ function onPrivateMessage(event)
 
 	if (event.sender.isItMe)
 	{
-		var userId = event.data.get("recipient"); // "data" is an SFSObject
+		var userId = event.data.recipient; // "data" is an SFSObject
 		user = sfs.userManager.getUserById(userId);
 	}
 	else
@@ -234,10 +234,7 @@ function onSendPublicMessageBtClick()
 			if (isSent)
 				$("#inputMessage").val("");	
 		} else {
-				var params = new SFS2X.SFSObject();
-				params.putInt("recipient", parseInt(currentPrivateChat));
-
-				var isSent = sfs.send(new SFS2X.Requests.System.PrivateMessageRequest(message, parseInt(currentPrivateChat), params));
+				var isSent = sfs.send(new SFS2X.Requests.System.PrivateMessageRequest(message, parseInt(currentPrivateChat), {recipient:currentPrivateChat}));
 
 				if (isSent)
 					$("#inputMessage").val("");
