@@ -74,17 +74,19 @@ var caps = false;
 		var headHeight = $('#chatHeader').height();
 		$('#chatHeader').css('min-height', headHeight);
 		$('#chatHeader_container').css('min-height', headHeight);
+		$('#chatHeader').css('max-height', headHeight);
+		$('#chatHeader_container').css('max-height', headHeight);
 
 		$('#keyboard_icon').click(function(){
 		if ($('#keyboard_container').hasClass('invisible')) {
 			//$('#keyboard_container').removeClass('invisible');
 			$('#bottom_menu').css('flex','20');
 			$('#logo').css('opacity','0');
-			setTimeout(function(){$('#keyboard_container').removeClass('invisible')},500);
+			setTimeout(function(){$('#keyboard_container').removeClass('invisible')},700);
 		} else {
 			$('#keyboard_container').addClass('invisible');
 			$('#bottom_menu').css('flex','1.5');
-			setTimeout(function(){$('#logo').css('opacity','0.3')},500);
+			setTimeout(function(){$('#logo').css('opacity','0.3')},700);
 		}
 	});
 
