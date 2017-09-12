@@ -3,6 +3,7 @@ var roomsArray = [];
 var usersArray = [];
 var privateChats;
 var needed_room;
+var pingObject = {};
 
 function init()
 {
@@ -349,5 +350,6 @@ function onPingPong(event)
 {
 	var avgLag = Math.round(event.lagValue * 100) / 100;
 	$("#lagLb").text("Average lag: " + avgLag + "ms");
+	sfs.send(new SFS2X.Requests.System.ObjectMessageRequest(pingObject));
 	trace("ping pong active");
 }
