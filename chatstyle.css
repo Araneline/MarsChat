@@ -243,7 +243,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 #bottom_menu {
     padding: 0 3.33vw 2.96vh 3.33vw;
     border-top: 2px solid rgb(195,246,249);
-    transition: all 1s linear;
+    transition: all 0.9s linear;
     flex: 1.5;
 }
 #bottom_menu_leftContainer {
