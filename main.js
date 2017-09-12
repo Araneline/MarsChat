@@ -43,6 +43,7 @@ function init()
 	sfs.addEventListener(SFS2X.SFSEvent.USER_EXIT_ROOM, onUserExitRoom, this);
 	sfs.addEventListener(SFS2X.SFSEvent.PUBLIC_MESSAGE, onPublicMessage, this);
 	sfs.addEventListener(SFS2X.SFSEvent.PRIVATE_MESSAGE, onPrivateMessage, this);
+	sfs.addEventListener(SFS2X.SFSEvent.PING_PONG, onPingPong, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, onRoomVariablesUpdate, this);
 	//sfs.addEventListener(SFS2X.SFSEvent.USER_VARIABLES_UPDATE, onUserVariablesUpdate, this);
 }
@@ -111,6 +112,7 @@ function onLogin(event)
 	$('#error_screen').css('display','none');
 	removePreloader();	
 	populateRoomsList();
+	sfs.enableLagMonitor(true, 30);
 }
 
 function removePreloader() {
@@ -340,4 +342,12 @@ function trace(txt, showAlert)
 
 	if (showAlert)
 		alert(txt);
+}
+
+
+function onPingPong(event)
+{
+	var avgLag = Math.round(event.lagValue * 100) / 100;
+	$("#lagLb").text("Average lag: " + avgLag + "ms");
+	trace("ping pong active");
 }
