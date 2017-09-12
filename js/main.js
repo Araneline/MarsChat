@@ -297,7 +297,7 @@ function populateUsersList()
 			var user = users[u];
 			
 			if (!user.isItMe) {
-				item = "<button class=\"chatButton users";
+				item = "<button class=\"chatButton unselectable users";
 				if (privateChats[user.id] != null && privateChats[user.id].toRead > 0) {
 					 item += " unread";
 				} else {

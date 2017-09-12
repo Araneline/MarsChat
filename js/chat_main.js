@@ -76,7 +76,7 @@ var caps = false;
 		$('#keyboard_icon').click(function(){
 		if ($('#keyboard_container').hasClass('invisible')) {
 			//$('#keyboard_container').removeClass('invisible');
-			$('#bottom_menu').css('flex','17');
+			$('#bottom_menu').css('flex','20');
 			$('#logo').css('opacity','0');
 			setTimeout(function(){$('#keyboard_container').removeClass('invisible')},500);
 		} else {
