@@ -62,7 +62,7 @@ function onConnection(event)
 		console.log("input:" + query);
 		query = query.split('user=');
 		if (query[1]) {
-			query = query[1].match(/[a-zA-Zа-яА-Я0-9]+/).toString();
+			query = query[1].toString();
 			var uName = query;
 			var isSent = sfs.send(new SFS2X.Requests.System.LoginRequest(uName));
 		} else {
