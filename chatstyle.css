@@ -221,10 +221,14 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 #chatHeader_container {
   font-family: 'EuropeExt';
   color: rgb(195,246,249);
-  font-size: 1.8vw;
-  line-height: 10vh;
+  display: flex;
+  align-items: flex-end;
+  font-size: 2.3vw;
   height: 100%;
   border-bottom: 2px solid rgb(195,246,249);
+}
+#nick {
+    padding-bottom: 2vh;
 }
 #bottom_container {
     width: 100%;
