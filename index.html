@@ -3,14 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="chatstyle.css">
+<link rel="stylesheet" type="text/css" href="scrollbarJquery/jquery.custom-scrollbar.css">
 	<title>Чат</title>
 	<script type="text/javascript" src="libs/jquery-1.7.2.min.js"></script>
 
 	<!-- Load SFS2X JS API -->
-	<script type="text/javascript" src="libs/sfs2x-api-1.7.5.js"></script>
+	<script type="text/javascript" src="libs/SFS2X_API_JS.js"></script>
 
 	<!-- Load main script -->
 	<script type="text/javascript" src="main.js"></script>
+
+	<!-- Load scrollbar script -->
+	<script type="text/javascript" src="scrollbarJquery/jquery.custom-scrollbar.min.js"></script>
 
 	<!-- Initialize user interface -->
 	<script type="text/javascript">
@@ -32,11 +36,31 @@
 
 		$('#toAllButton').click(function(){onToAllClick()});
 
+  		$(".scrollbar").customScrollbar();
+
 	    });
 	</script>
 </head>
 <body>
 <div class="container bordered-item">
+<div id="preload_container">
+<video autoplay="autoplay" loop>
+<source src="hex_anim.mp4" type="video/mp4" />
+</video>
+</div>
+<div id="error_screen">
+	<div style="background: rgb(100,0,3); width: 67.5vw; height: 44.1vw; display: flex; align-items: center; justify-content: center;">
+		<div style="background: rgb(100,0,3); width: 65.3vw; height: 41.8vw; border: 0.5vw solid black; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+			<img src="images/danger_icon.png" style="width: 15.3vw; height: auto;">
+			<p class="error_p top_p_margin">СОЕДИНЕНИЕ РАЗОРВАНО</p>
+			<p class="error_p">ПО НЕИЗВЕСТНОЙ ПРИЧИНЕ</p>
+			<div>
+			<p class="error_p bottom_p_margin">ПРОВЕРЬТЕ ЖУРНАЛ ОШИБОК СЕРВЕРА</p>
+			<button id="reconnectButton" onclick="reconnectClick()">ВОССТАНОВИТЬ СОЕДИНЕНИЕ</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div id="left_chat_part">
 		<div id="chatHeader">
 		<div id="chatHeader_container">
@@ -45,30 +69,301 @@
 		</div>
 		<div id="messageWindow">
 		<img id="logo" src="images/mars-tefo.png">
-		<div id="scrollbar_window" class="scrollbar leftscrollbar">
+		<div id="scrollbar_window" class="scrollbar leftscrollbar default-skin">
 			<div id="messageWindow_container"></div>
 		</div>
 		</div>
 		<div id="bottom_menu">
+			<div id="bottom_container">
+			<div id="keyboard_icon_container"><img id="keyboard_icon" class="img-responsive icon" src="images/keyboard_icon.png"></div>
 			<div id="bottom_menu_leftContainer">
 				<div id="chatWith">Общий чат</div>
+				<div class="fullWidth"><input type="text" name="input message" id="inputMessage" placeholder="Введите сообщение"></div>
 			</div>
-			<div id="bottom_menu_rightContainer">
-				<input type="text" name="input message" id="inputMessage" placeholder="Введите сообщение">
-				<img src="images/send_icon.png" id="send_icon">
+			<div id="send_icon_container"><img class="img-responsive icon" id="send_icon" src="images/send_icon.png"></div>
 			</div>
+	<div id="keyboard_container" class="invisible">
+	<div class="keyboard_row2" style="margin-top: 0;">
+		<div class="key key_standart"><div class="key_inside">1</div></div>
+		<div class="key key_standart"><div class="key_inside">2</div></div>
+		<div class="key key_standart"><div class="key_inside">3</div></div>
+		<div class="key key_standart"><div class="key_inside">4</div></div>
+		<div class="key key_standart"><div class="key_inside">5</div></div>
+		<div class="key key_standart"><div class="key_inside">6</div></div>
+		<div class="key key_standart"><div class="key_inside">7</div></div>
+		<div class="key key_standart"><div class="key_inside">8</div></div>
+		<div class="key key_standart"><div class="key_inside">9</div></div>
+		<div class="key key_standart"><div class="key_inside">0</div></div>
+		<div class="key key_standart"><div class="key_inside">-</div></div>
+		<div class="key key_standart"><div class="key_inside">=</div></div>
+		<div id="backspace" class="key key_standart"><div class="key_inside"><-</div></div>
+	</div>
+	<div class="keyboard_row2 ru">
+		<div id="pad_key" class="key key_standart"></div>
+		<div class="key key_standart"><div class="key_inside">й</div></div>
+		<div class="key key_standart"><div class="key_inside">ц</div></div>
+		<div class="key key_standart"><div class="key_inside">у</div></div>
+		<div class="key key_standart"><div class="key_inside">к</div></div>
+		<div class="key key_standart"><div class="key_inside">е</div></div>
+		<div class="key key_standart"><div class="key_inside">н</div></div>
+		<div class="key key_standart"><div class="key_inside">г</div></div>
+		<div class="key key_standart"><div class="key_inside">ш</div></div>
+		<div class="key key_standart"><div class="key_inside">щ</div></div>
+		<div class="key key_standart"><div class="key_inside">з</div></div>
+		<div class="key key_standart"><div class="key_inside">х</div></div>
+		<div class="key key_standart"><div class="key_inside">ъ</div></div>
+		<div id="enter_top" class="key key_standart"></div>
+	</div>
+	<div class="en invisible">
+		<div id="pad_key" class="key key_standart"></div>
+		<div class="key key_standart"><div class="key_inside">q</div></div>
+		<div class="key key_standart"><div class="key_inside">w</div></div>
+		<div class="key key_standart"><div class="key_inside">e</div></div>
+		<div class="key key_standart"><div class="key_inside">r</div></div>
+		<div class="key key_standart"><div class="key_inside">t</div></div>
+		<div class="key key_standart"><div class="key_inside">y</div></div>
+		<div class="key key_standart"><div class="key_inside">u</div></div>
+		<div class="key key_standart"><div class="key_inside">i</div></div>
+		<div class="key key_standart"><div class="key_inside">o</div></div>
+		<div class="key key_standart"><div class="key_inside">p</div></div>
+		<div class="key key_standart"><div class="key_inside">[</div></div>
+		<div class="key key_standart"><div class="key_inside">]</div></div>
+		<div id="enter_top" class="key key_standart"></div>
+	</div>
+	<div class="keyboard_row2 ru">
+		<div id="cl" class="key"><div class="key_inside">CL</div></div>
+		<div class="key key_standart"><div class="key_inside">ф</div></div>
+		<div class="key key_standart"><div class="key_inside">ы</div></div>
+		<div class="key key_standart"><div class="key_inside">в</div></div>
+		<div class="key key_standart"><div class="key_inside">а</div></div>
+		<div class="key key_standart"><div class="key_inside">п</div></div>
+		<div class="key key_standart"><div class="key_inside">р</div></div>
+		<div class="key key_standart"><div class="key_inside">о</div></div>
+		<div class="key key_standart"><div class="key_inside">л</div></div>
+		<div class="key key_standart"><div class="key_inside">д</div></div>
+		<div class="key key_standart"><div class="key_inside">ж</div></div>
+		<div class="key key_standart"><div class="key_inside">э</div></div>
+		<div id="enter_low" class="key" style="align-items: flex-end;"><div id="enter-container">
+			<div id="one"><div id="one_one"><img id="bg_image" src="images/bg_color.png"></div></div>
+			<div id="two"><div id="two_one"><img src="images/enter-image.png" style="padding: 2px;" class="img-responsive"></div></div>
+		</div></div>
+	</div>
+	<div class="en invisible">
+		<div id="cl" class="key"><div class="key_inside">CL</div></div>
+		<div class="key key_standart"><div class="key_inside">a</div></div>
+		<div class="key key_standart"><div class="key_inside">s</div></div>
+		<div class="key key_standart"><div class="key_inside">d</div></div>
+		<div class="key key_standart"><div class="key_inside">f</div></div>
+		<div class="key key_standart"><div class="key_inside">g</div></div>
+		<div class="key key_standart"><div class="key_inside">h</div></div>
+		<div class="key key_standart"><div class="key_inside">j</div></div>
+		<div class="key key_standart"><div class="key_inside">k</div></div>
+		<div class="key key_standart"><div class="key_inside">l</div></div>
+		<div class="key key_standart"><div class="key_inside">;</div></div>
+		<div class="key key_standart"><div class="key_inside">'</div></div>
+		<div id="enter_low" class="key" style="align-items: flex-end;"><div id="enter-container">
+			<div id="one"><div id="one_one"><img id="bg_image" src="images/bg_color.png"></div></div>
+			<div id="two"><div id="two_one"><img src="images/enter-image.png" style="padding: 2px;" class="img-responsive"></div></div>
+		</div></div>
+	</div>
+	<div class="keyboard_row ru2">
+		<div id="shift" class="key shift"><div class="key_inside">SHIFT</div></div>
+		<div class="key key_standart"><div class="key_inside">я</div></div>
+		<div class="key key_standart"><div class="key_inside">ч</div></div>
+		<div class="key key_standart"><div class="key_inside">с</div></div>
+		<div class="key key_standart"><div class="key_inside">м</div></div>
+		<div class="key key_standart"><div class="key_inside">и</div></div>
+		<div class="key key_standart"><div class="key_inside">т</div></div>
+		<div class="key key_standart"><div class="key_inside">ь</div></div>
+		<div class="key key_standart"><div class="key_inside">б</div></div>
+		<div class="key key_standart"><div class="key_inside">ю</div></div>
+		<div class="key key_standart"><div class="key_inside">.</div></div>
+		<div id="right_shift" class="key right_shift"><div class="key_inside">SHIFT</div></div>
+	</div>
+	<div class="en2 invisible">
+		<div id="shift" class="key shift"><div class="key_inside">SHIFT</div></div>
+		<div class="key key_standart"><div class="key_inside">z</div></div>
+		<div class="key key_standart"><div class="key_inside">x</div></div>
+		<div class="key key_standart"><div class="key_inside">c</div></div>
+		<div class="key key_standart"><div class="key_inside">v</div></div>
+		<div class="key key_standart"><div class="key_inside">b</div></div>
+		<div class="key key_standart"><div class="key_inside">n</div></div>
+		<div class="key key_standart"><div class="key_inside">m</div></div>
+		<div class="key key_standart"><div class="key_inside">,</div></div>
+		<div class="key key_standart"><div class="key_inside">.</div></div>
+		<div class="key key_standart"><div class="key_inside">/</div></div>
+		<div id="right_shift" class="key right_shift"><div class="key_inside">SHIFT</div></div>
+	</div>
+	<div class="keyboard_row">
+		<div id="ctrl"></div>
+		<div id="ctrl"></div>
+		<div id="en_ru" val="ru" class="key"><div class="key_inside">eng<br>ru</div></div>
+		<div id="space" class="key"><div class="key_inside"> </div></div>
+		<div class="key key_standart" id="<"><div class="key_inside"><</div></div>
+		<div class="key key_standart" id=">"><div class="key_inside">></div></div>
+		<div id="ctrl"></div>
+	</div>
+	</div>
 		</div>
 </div>
 <div id="right_chat_part">
 	<div class="inner_cont">
-			<!--Content-->
+				<!--Content-->]
 				<div id="userList" class="scrollbar">
 					<div id="userlist_container">
 					</div>
 				</div>
-				<button id="toAllButton" class="chatButton">ОТПРАВЛЯТЬ ВСЕМ</button>
+				<div id="toAllButton_container"><button id="toAllButton" class="chatButton">ОТПРАВЛЯТЬ ВСЕМ</button></div>
 	</div>
 </div>
 </div>
 </body>
 </html>
+
+<script>
+		var shift = false;
+		var caps = false;
+
+	$('#keyboard_icon').click(function(){
+		if ($('#keyboard_container').hasClass('invisible')) {
+			//$('#keyboard_container').removeClass('invisible');
+			$('#bottom_menu').css('flex','17');
+			$('#logo').css('opacity','0');
+			setTimeout(function(){$('#keyboard_container').removeClass('invisible')},1000);
+		} else {
+			$('#keyboard_container').addClass('invisible');
+			$('#bottom_menu').css('flex','1.5');
+			setTimeout(function(){$('#logo').css('opacity','0.3')},1000);
+		}
+	});
+
+	$('.key').click(function(){
+		var current_cursor = cur_caret();
+		var text = $('#inputMessage').val().slice(0,current_cursor);
+		var text2 = $('#inputMessage').val().slice(current_cursor,$('#inputMessage').val().length);
+		switch ($(this).attr('id')) {
+			case "backspace":
+					text = text.slice(0,-1);
+					text += text2;
+					$('#inputMessage').val(text);
+					$("#inputMessage").focus();
+					setCaretToPos(document.getElementById("inputMessage"), current_cursor - 1);
+				break
+			case "enter_low":
+				onSendPublicMessageBtClick();
+				break
+			case "<":
+				$("#inputMessage").focus();
+				var prev_length = $("#inputMessage").val().length;
+				if (current_cursor > 0) {
+					setCaretToPos(document.getElementById("inputMessage"), current_cursor - 1);
+				}
+				break
+			case ">":
+				$("#inputMessage").focus();
+				el = document.getElementById('inputMessage');
+				var val = el.value;
+    			var current_cursor = val.slice(0, el.selectionStart).length;
+				var prev_length = $("#inputMessage").val().length;
+				if (current_cursor < val.length) {
+					setCaretToPos(document.getElementById("inputMessage"), current_cursor + 1);
+				}
+				break
+			case "shift":
+				if ($(this).hasClass('pressed')) {
+					shift = false;
+					$(".shift").removeClass('pressed');
+				} else {
+					shift = true;
+					$(".shift").addClass('pressed');
+				}				
+				break
+			case "right_shift":
+				if ($(this).hasClass('pressed')) {
+					shift = false;
+					$(".right_shift").removeClass('pressed');
+				} else {
+					shift = true;
+					$(".right_shift").addClass('pressed');
+				}			
+				break
+			case "cl":
+				if ($(this).hasClass('pressedCaps')) {
+					caps = false;
+					$(this).removeClass('pressedCaps');
+				} else {
+					caps = true;
+					$(this).addClass('pressedCaps');
+				}				
+				break
+			case "en_ru":
+				lang_change();
+				break
+			default:
+				var clicked = $(':nth-child(1)', this).html();
+				if (clicked.length == 1) {
+					if ((shift == true) || (caps == true)) {
+						clicked = clicked.toUpperCase();
+						shift = false;
+						if (caps != true) {
+							$('.pressed').removeClass('pressed');
+						}
+					}
+					text += clicked + text2;
+					$('#inputMessage').val(text);
+					$("#inputMessage").focus();
+					setCaretToPos(document.getElementById("inputMessage"), current_cursor + 1);
+				}
+				break
+		}
+	});
+
+	function lang_change() {
+		if($('#en_ru').attr('val') == "ru") {
+			$('.en').removeClass('invisible');
+			$('.en').addClass('keyboard_row2');
+			$('.ru').addClass('invisible');
+			$('.ru').removeClass('keyboard_row2');
+
+			$('.en2').removeClass('invisible');
+			$('.en2').addClass('keyboard_row');
+			$('.ru2').addClass('invisible');
+			$('.ru2').removeClass('keyboard_row');
+			$('#en_ru').attr('val','en');
+		} else {
+			$('.ru').removeClass('invisible');
+			$('.ru').addClass('keyboard_row2');
+			$('.en').addClass('invisible');
+			$('.en').removeClass('keyboard_row2');
+
+			$('.ru2').removeClass('invisible');
+			$('.ru2').addClass('keyboard_row');
+			$('.en2').addClass('invisible');
+			$('.en2').removeClass('keyboard_row');
+			$('#en_ru').attr('val','ru');
+		}
+	}
+
+	function cur_caret() {
+		el = document.getElementById('inputMessage');
+		var val = el.value;
+    	return val.slice(0, el.selectionStart).length;
+	}
+	function setSelectionRange(input, selectionStart, selectionEnd) {
+	  if (input.setSelectionRange) {
+	    input.focus();
+	    input.setSelectionRange(selectionStart, selectionEnd);
+	  }
+	  else if (input.createTextRange) {
+	    var range = input.createTextRange();
+	    range.collapse(true);
+	    range.moveEnd('character', selectionEnd);
+	    range.moveStart('character', selectionStart);
+	    range.select();
+	  }
+	}
+
+	function setCaretToPos (input, pos) {
+	  setSelectionRange(input, pos, pos);
+	}
+</script>
