@@ -179,7 +179,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 #toAllButton_container {
     width: 100%;
-    flex: 1.5;
+    flex: 1.6;
     display: flex;
     flex-direction: column;
     align-items: left;
