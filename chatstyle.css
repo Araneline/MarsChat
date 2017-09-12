@@ -69,7 +69,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 .inner_cont {
     flex: 1;
-    padding: 8.89vh 3.33vw 2.96vh 3.33vw;
+    padding: 10.5vh 3.33vw 2.96vh 3.33vw;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -398,7 +398,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     font-size: 1vw;
     text-transform: uppercase;
     margin-right: 0.47vw;
-    
+
    -moz-user-select: -moz-none;
    -khtml-user-select: none;
    -webkit-user-select: none;
