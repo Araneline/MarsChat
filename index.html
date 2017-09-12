@@ -39,7 +39,7 @@
 <div class="container bordered-item">
 <div id="preload_container">
 <video autoplay="autoplay" loop>
-<source src="hex_anim_.mp4" type="video/mp4" />
+<source src="hex_anim.mp4" type="video/mp4" />
 </video>
 </div>
 <div id="error_screen">
@@ -227,7 +227,7 @@
 		} else {
 			$('#keyboard_container').addClass('invisible');
 			$('#bottom_menu').css('flex','1.5');
-			$('#logo').css('opacity','0.3');
+			setTimeout(function(){$('#logo').css('opacity','0.3')},1000);
 		}
 	});
 
