@@ -305,7 +305,6 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   height: 100%;
   width: 6.33%; 
   text-align: center;
-  font-size: 1.1vw;
 }
 #pad_key {
   border: 0;
@@ -366,6 +365,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 .key_standart {
   height: 100%;
   width: 6.33%;   
+  font-size: 2vw !important;
 }
 .keyboard_row {
   height: 18.2%;
@@ -395,7 +395,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     border-radius: 5px;
     font-family: 'EuropeExt';
     color: rgb(195,246,249);
-    font-size: 1.3vw;
+    font-size: 1vw;
     text-transform: uppercase;
     margin-right: 0.47vw;
 }
@@ -434,7 +434,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     background-position: 50%;
     transform: scale(10,10);
     opacity: 0;
-    transition: transform .5s, opacity 1s;
+    transition: transform .3s, opacity 1s;
   }
 
 .key_inside:active:after {
