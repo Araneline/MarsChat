@@ -236,7 +236,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     transition: all 1s linear;
 }
 #bottom_menu {
-    padding: 0 1.665vw 2.96vh 1.665vw;
+    padding: 0 3.33vw 2.96vh 3.33vw;
     border-top: 2px solid rgb(195,246,249);
     transition: all 1s linear;
     flex: 1.5;
@@ -294,7 +294,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 #space {
   height: 100%;
-  width: 41.8%;
+  width: 42.15%;
 }
 #en_ru {
   height: 100%;
