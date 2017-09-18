@@ -55,7 +55,10 @@ var caps = false;
 
 			init();
 			sfs.connect();
+
 			
+		$('#userList').perfectScrollbar();
+		$('#scrollbar_window').perfectScrollbar({theme: 'message-theme'});			
 
 		$("#send_icon").click(function() {
 			onSendPublicMessageBtClick();
