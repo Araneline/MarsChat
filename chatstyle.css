@@ -167,6 +167,8 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 #scrollbar_window {
   flex: 1;
+  position: relative;
+  width: 100%;
 }
 #logo {
   position: absolute;
